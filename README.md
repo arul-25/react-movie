@@ -1,6 +1,6 @@
 # site name
 
-you can see this app at [in this links](https://app.netlify.com/sites/arulproject-reactmovie/settings/general)
+you can see this app at [in this links](https://arulproject-reactmovie.netlify.app/)
 
 # Getting Started with Create React App
 
