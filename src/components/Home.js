@@ -14,12 +14,14 @@ import NoImage from "../images/no_image.jpg";
 import Button from "./Button";
 
 const Home = () => {
-  const { state, setSearchTerm, searchTerm, loading, setIsLoadingMore } =
+  const { state, error, setSearchTerm, searchTerm, loading, setIsLoadingMore } =
     useHomeFetch();
+
+  if (error) return <div>Something went wrong...</div>;
 
   return (
     <>
-      {state?.results[0] ? (
+      {!searchTerm && state?.results[0] ? (
         <HeroImage
           image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${state.results[0].backdrop_path}`}
           title={state.results[0].original_title}

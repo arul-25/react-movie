@@ -58,7 +58,7 @@ export const useHomeFetch = () => {
     fetchMovies(state.page + 1, searchTerm);
 
     setIsLoadingMore(false);
-  }, [isLoadingMore, searchTerm, state?.page]);
+  }, [searchTerm, isLoadingMore, state?.page]);
 
   return { state, loading, error, searchTerm, setSearchTerm, setIsLoadingMore };
 };
