@@ -10,15 +10,15 @@ import { Wrapper, Content, LogoImg, TMDBLogoImg } from "./Header.styles";
 
 const Header = () => {
   const setSearchTerm = useSetRecoilState(search);
+  const handleClick = () => {
+    setSearchTerm("");
+    sessionStorage.removeItem("homeState");
+  };
   return (
     <Wrapper>
       <Content>
         <Link to="/">
-          <LogoImg
-            src={RMDBLogo}
-            alt="rmdb-logo"
-            onClick={() => setSearchTerm("")}
-          />
+          <LogoImg src={RMDBLogo} alt="rmdb-logo" onClick={handleClick} />
         </Link>
         <TMDBLogoImg src={TMDBLogo} alt="tmdb_logo" />
       </Content>

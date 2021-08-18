@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 // API
 import API from "../API";
+import { isPersistedState } from "../helpers";
 
 export const useMovieFetch = (movieId) => {
   const [state, setState] = useState({});
@@ -9,6 +10,11 @@ export const useMovieFetch = (movieId) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    const sessionState = isPersistedState(movieId);
+    if (sessionState) {
+      setState(sessionState);
+      setLoading(false);
+    }
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -34,6 +40,11 @@ export const useMovieFetch = (movieId) => {
     };
     fetchData();
   }, [movieId]);
+
+  // save to session storage
+  useEffect(() => {
+    sessionStorage.setItem(movieId, JSON.stringify(state));
+  }, [movieId, state]);
 
   return { state, loading, error };
 };

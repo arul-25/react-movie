@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { atom, useRecoilState } from "recoil";
-
 // API
 import API from "../API";
+// helper
+import { isPersistedState } from "../helpers";
 
 const initalState = {
   page: 0,
@@ -48,6 +49,11 @@ export const useHomeFetch = () => {
 
   // Initial and Search
   useEffect(() => {
+    if (!searchTerm) {
+      const sessionState = isPersistedState("homeState");
+
+      if (sessionState) return setState(sessionState);
+    }
     setState(initalState);
     fetchMovies(1, searchTerm);
   }, [searchTerm]);
@@ -59,6 +65,11 @@ export const useHomeFetch = () => {
 
     setIsLoadingMore(false);
   }, [searchTerm, isLoadingMore, state?.page]);
+
+  // save to session storage
+  useEffect(() => {
+    if (!searchTerm) sessionStorage.setItem("homeState", JSON.stringify(state));
+  }, [searchTerm, state]);
 
   return { state, loading, error, searchTerm, setSearchTerm, setIsLoadingMore };
 };
